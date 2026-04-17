@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SoundWave Store</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      background-color: #0a0a0a;
+      color: #fff;
+      transition: background 0.5s, color 0.5s;
+    }
+    header {
+      background: linear-gradient(90deg, #6a00ff, #00c3ff);
+      padding: 20px;
+      text-align: center;
+      font-size: 2em;
+      font-weight: bold;
+      color: #fff;
+    }
+    .banner {
+      height: 300px;
+      background: url('https://images.unsplash.com/photo-1511379938547-c1f69419868d') center/cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      animation: pulse 5s infinite alternate;
+    }
+    .banner h1 {
+      font-size: 3em;
+      color: #fff;
+      text-shadow: 0 0 20px #00c3ff;
+    }
+    @keyframes pulse {
+      from { filter: brightness(0.8); }
+      to { filter: brightness(1.2); }
+    }
+    .btn {
+      background: #6a00ff;
+      color: #fff;
+      padding: 15px 30px;
+      border: none;
+      cursor: pointer;
+      font-size: 1.2em;
+      margin-top: 20px;
+      transition: transform 0.3s, background 0.3s;
+    }
+    .btn:hover {
+      transform: scale(1.1);
+      background: #00c3ff;
+    }
+    .catalogo {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 40px;
+    }
+    .producto {
+      background: #1a1a1a;
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+      transition: transform 0.3s;
+    }
+    .producto:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 0 20px #6a00ff;
+    }
+    .producto img {
+      width: 100%;
+      border-radius: 10px;
+    }
+    .dark-mode {
+      background-color: #fff;
+      color: #000;
+    }
+    .carrito {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      background: #6a00ff;
+      padding: 20px;
+      border-radius: 10px;
+      color: #fff;
+    }
+    .reseñas {
+      padding: 40px;
+      background: #111;
+    }
+    .estrella {
+      color: gold;
+    }
+  </style>
+</head>
+<body>
+  <header>🎸 SoundWave Store</header>
+  <section class="banner">
+    <div>
+      <h1>Siente el poder del sonido</h1>
+      <button class="btn" onclick="explorar()">Explorar tienda</button>
+    </div>
+  </section>
+
+  <section class="catalogo" id="catalogo">
+    <div class="producto">
+      <img src="https://images.unsplash.com/photo-1511379938547-c1f69419868d" alt="Guitarra eléctrica">
+      <h3>Guitarra Eléctrica X</h3>
+      <p>$499</p>
+      <button class="btn" onclick="agregarCarrito('Guitarra Eléctrica X', 499)">Agregar al carrito</button>
+    </div>
+    <div class="producto">
+      <img src="https://images.unsplash.com/photo-1513863326356-4e0b0a1d1d3a" alt="Guitarra acústica">
+      <h3>Guitarra Acústica Y</h3>
+      <p>$299</p>
+      <button class="btn" onclick="agregarCarrito('Guitarra Acústica Y', 299)">Agregar al carrito</button>
+    </div>
+    <div class="producto">
+      <img src="https://images.unsplash.com/photo-1511379938547-c1f69419868d" alt="Bajo Z">
+      <h3>Bajo Z</h3>
+      <p>$399</p>
+      <button class="btn" onclick="agregarCarrito('Bajo Z', 399)">Agregar al carrito</button>
+    </div>
+  </section>
+
+  <section class="reseñas">
+    <h2>Reseñas de clientes</h2>
+    <p><span class="estrella">★★★★★</span> "Excelente sonido y calidad."</p>
+    <p><span class="estrella">★★★★☆</span> "Muy buena guitarra para principiantes."</p>
+  </section>
+
+  <div class="carrito" id="carrito">
+    <h3>Carrito</h3>
+    <ul id="listaCarrito"></ul>
+    <p>Total: $<span id="total">0</span></p>
+    <button class="btn">Pagar</button>
+  </div>
+
+  <script>
+    let carrito = [];
+    function agregarCarrito(nombre, precio) {
+      carrito.push({nombre, precio});
+      actualizarCarrito();
+      new Audio('https://www.soundjay.com/button/beep-07.wav').play();
+    }
+    function actualizarCarrito() {
+      const lista = document.getElementById('listaCarrito');
+      lista.innerHTML = '';
+      let total = 0;
+      carrito.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = `${item.nombre} - $${item.precio}`;
+        lista.appendChild(li);
+        total += item.precio;
+      });
+      document.getElementById('total').textContent = total;
+    }
+    function explorar() {
+      document.getElementById('catalogo').scrollIntoView({behavior: 'smooth'});
+    }
+  </script>
+</body>
+</html>
